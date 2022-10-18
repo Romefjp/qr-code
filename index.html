@@ -1,34 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="./style.css">
-    </head>
-    <body>
-        <div class="scan-body">
-            <p>click to scan qr code</p>
-            <i class="scan-icon" id="scan">
-                <span
-                    class="iconify"
-                    data-icon="ic:baseline-qr-code-scanner"
-                    data-inline="false">
-                </span>
-            </i>
-        </div>
-
-        <div class="camera">
-            <canvas hidden="" id="canvas" class="qr-canvas"></canvas>
-            <div id="result" hidden="">
-                <b>Data:</b> <span id="output"></span>
-            </div>
-        </div>
-
-        <script src="./qr_packed.min.js"></script>
-        <script src="./iconify.min.js"></script>
-        <script src="./main.js"></script>
-
-    </body>
+<html>
+<head>...</head>
+  <body>
+    <video id="video" width="640" height="480" autoplay></video>
+    <!-- Dont for get to link your JavaScript -->
+    <script src="./main.js" async></script>
+  </body>
 </html>
