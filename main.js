@@ -26,8 +26,9 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             if (codes.length === 0) return;
         
             for (const barcode of codes)  {
-            // Log the barcode to the console
-            console.log(barcode);
+                // Log the barcode to the console
+                console.log(barcode);
+                console.log(barcode.rawValue);
             }
         }).catch(err => {
             // Log an error if one happens
