@@ -7,7 +7,7 @@
         <title>Document</title>
     </head>
     <body>
-        <video></video>
+        <video id="qr-video"></video>
 
 
         <script src="./qr-scanner.umd.min.js"></script>
@@ -20,6 +20,7 @@
             //     { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ },
             // );
 
+            const videoElem = document.getElementById('qr-video');
             // For backwards compatibility, omitting the options object will currently use the old api, returning scan results as
             // simple strings. This old api will be removed in the next major release, by which point the options object is then
             // also not required anymore to enable the new api.
