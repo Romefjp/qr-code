@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <video id="video-element" autoplay="true"></video>
+
+        <script>
+            const video = document.querySelector('#video-element')
+
+            navigator.mediaDevices.getUserMedia({video:{ facingMode: "environment" }})
+                .then(stream =>  {
+                    video.srcObject = stream
+                    video.onloadedmetadata = () => {
+                        video.play();
+                    };
+                    console.log(stream);
+                })
+                .catch(error => {
+                    console.error("Camera not found");
+                })
+
+            
+        </script>
+    </body>
+</html>

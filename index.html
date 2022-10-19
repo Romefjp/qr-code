@@ -1,44 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <video id="qr-video"></video>
-        <br>
-        <span id="cam-qr-result">None</span>
-        <br>
-        <span id="result"></span>
+<head>
+    <meta charset="UTF-8">
+    <title>QR Scanner Demo</title>
+</head>
+<body>
+<h1>Scan from WebCam:</h1>
+<div id="video-container" class="example-style-2">
+    <video id="qr-video"></video>
+</div>
 
 
-        <script src="./qr-scanner.umd.min.js"></script>
-        <script>
-            const videoElem = document.getElementById('qr-video');
-            const camQrResult = document.getElementById('cam-qr-result');
-            const RESULT = document.getElementById('result');
-            // do something with QrScanner
-            // To enforce the use of the new api with detailed scan results, call the constructor with an options object, see below.
-            const qrScanner = new QrScanner(
-                videoElem,
-                result => {
-                    console.log('decoded qr code:', result)
-                    RESULT.innerHTML = result.data
-                    alert(result.data)
-                },
-                { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ 
-                    onDecodeError: error => {
-                        camQrResult.textContent = error;
-                        camQrResult.style.color = 'inherit';
-                    },
-                    highlightScanRegion: true,
-                    highlightCodeOutline: true,
-                },
-            );
+<br>
+<b>Detected QR code: </b>
+<span id="cam-qr-result">None</span>
 
-            qrScanner.start();
-        </script>
-    </body>
+<br>
+
+
+<!--<script src="../qr-scanner.umd.min.js"></script>-->
+<!--<script src="../qr-scanner.legacy.min.js"></script>-->
+<script type="module">
+    import QrScanner from "./qr-scanner.min.js";
+
+    const video = document.getElementById('qr-video');
+    const videoContainer = document.getElementById('video-container');
+    
+    const flashState = document.getElementById('flash-state');
+    const camQrResult = document.getElementById('cam-qr-result');
+
+    function setResult(label, result) {
+        console.log(result.data);
+        label.textContent = result.data;
+        label.style.color = 'teal';
+        clearTimeout(label.highlightTimeout);
+        label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
+    }
+
+    // ####### Web Cam Scanning #######
+
+    const scanner = new QrScanner(video, result => setResult(camQrResult, result), {
+        onDecodeError: error => {
+            camQrResult.textContent = error;
+            camQrResult.style.color = 'inherit';
+        },
+        highlightScanRegion: true,
+        highlightCodeOutline: true,
+    });
+
+
+    scanner.start();
+
+    // for debugging
+    window.scanner = scanner;
+
+
+
+</script>
+
+<style>
+    div {
+        margin-bottom: 16px;
+    }
+
+    #video-container {
+        line-height: 0;
+    }
+
+    #video-container.example-style-1 .scan-region-highlight-svg,
+    #video-container.example-style-1 .code-outline-highlight {
+        stroke: #64a2f3 !important;
+    }
+
+    #video-container.example-style-2 {
+        position: relative;
+        width: max-content;
+        height: max-content;
+        overflow: hidden;
+    }
+    #video-container.example-style-2 .scan-region-highlight {
+        border-radius: 30px;
+        outline: rgba(0, 0, 0, .25) solid 50vmax;
+    }
+    #video-container.example-style-2 .scan-region-highlight-svg {
+        display: none;
+    }
+    #video-container.example-style-2 .code-outline-highlight {
+        stroke: rgba(255, 255, 255, .5) !important;
+        stroke-width: 15 !important;
+        stroke-dasharray: none !important;
+    }
+
+
+    hr {
+        margin-top: 32px;
+    }
+    input[type="file"] {
+        display: block;
+        margin-bottom: 16px;
+    }
+</style>
+</body>
 </html>

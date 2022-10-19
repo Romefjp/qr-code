@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <video id="qr-video"></video>
+        <br>
+        <span id="cam-qr-result">None</span>
+        <br>
+        <span id="result"></span>
+
+
+        <script type="module">
+            import QrScanner  from "./qr-scanner.min.js";
+
+            const videoElem = document.getElementById('qr-video');
+            const camQrResult = document.getElementById('cam-qr-result');
+            const RESULT = document.getElementById('result');
+            // do something with QrScanner
+            // To enforce the use of the new api with detailed scan results, call the constructor with an options object, see below.
+            const qrScanner = new QrScanner(
+                videoElem,
+                result => {
+                    console.log('decoded qr code:', result)
+                    camQrResult.innerHTML = result.data
+                    alert(result.data)
+                },
+                { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ 
+                    onDecodeError: error => {
+                        // camQrResult.textContent = error;
+                        // camQrResult.style.color = 'inherit';
+                    },
+                    highlightScanRegion: true,
+                    highlightCodeOutline: true,
+                },
+            );
+
+            qrScanner.start();
+        </script>
+    </body>
+</html>
