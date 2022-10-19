@@ -7,23 +7,26 @@
         <title>Document</title>
     </head>
     <body>
-        <canvas id="canvas1"></canvas>
+        <video id="preview"></video>
 
 
-        <!-- unpkg -->
-        <script src="https://unpkg.com/instacam"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> 
 
-        <!-- jsdelivr -->
-        <script src="https://cdn.jsdelivr.net/npm/instacam@latest/dist/instacam.umd.js"></script>
-
-        <script>
-            let camera = new Instacam(
-                document.querySelector('#canvas1'), {
-                    width: 800,
-                    height: 600
-                }
-            );
-
-        </script>
+        <script type="text/javascript">
+            let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+            scanner.addListener('scan', function (content) {
+              alert(content);
+            });
+            Instascan.Camera.getCameras().then(function (cameras) {
+              if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+              } else {
+                console.error('No cameras found.');
+              }
+            }).catch(function (e) {
+              console.error(e);
+            });
+          </script>
     </body>
 </html>
