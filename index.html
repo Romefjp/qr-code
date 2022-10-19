@@ -26,6 +26,7 @@
                 result => {
                     console.log('decoded qr code:', result)
                     RESULT.innerHTML = result.data
+                    alert(result.data)
                 },
                 { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ 
                     onDecodeError: error => {
