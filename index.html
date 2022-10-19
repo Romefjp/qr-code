@@ -7,26 +7,29 @@
         <title>Document</title>
     </head>
     <body>
-        <video id="preview"></video>
+        <video></video>
 
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> 
+        <script src="./qr-scanner.umd.min.js"></script>
+        <script>
+            // do something with QrScanner
+            // To enforce the use of the new api with detailed scan results, call the constructor with an options object, see below.
+            // const qrScanner = new QrScanner(
+            //     videoElem,
+            //     result => console.log('decoded qr code:', result),
+            //     { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ },
+            // );
 
-        <script type="text/javascript">
-            let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-            scanner.addListener('scan', function (content) {
-              alert(content);
-            });
-            Instascan.Camera.getCameras().then(function (cameras) {
-              if (cameras.length > 0) {
-                scanner.start(cameras[0]);
-              } else {
-                console.error('No cameras found.');
-              }
-            }).catch(function (e) {
-              console.error(e);
-            });
-          </script>
+            // For backwards compatibility, omitting the options object will currently use the old api, returning scan results as
+            // simple strings. This old api will be removed in the next major release, by which point the options object is then
+            // also not required anymore to enable the new api.
+            const qrScanner = new QrScanner(
+                videoElem,
+                result => console.log('decoded qr code:', result),
+                // No options provided. This will use the old api and is deprecated in the current version until next major version.
+            );
+
+            qrScanner.start();
+        </script>
     </body>
 </html>
