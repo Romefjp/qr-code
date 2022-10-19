@@ -10,17 +10,23 @@
         <video id="qr-video"></video>
         <br>
         <span id="cam-qr-result">None</span>
+        <br>
+        <span id="result"></span>
 
 
         <script src="./qr-scanner.umd.min.js"></script>
         <script>
             const videoElem = document.getElementById('qr-video');
             const camQrResult = document.getElementById('cam-qr-result');
+            const RESULT = document.getElementById('result');
             // do something with QrScanner
             // To enforce the use of the new api with detailed scan results, call the constructor with an options object, see below.
             const qrScanner = new QrScanner(
                 videoElem,
-                result => console.log('decoded qr code:', result),
+                result => {
+                    console.log('decoded qr code:', result)
+                    RESULT.innerHTML = result.data
+                },
                 { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ 
                     onDecodeError: error => {
                         camQrResult.textContent = error;
