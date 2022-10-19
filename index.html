@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html>
-<head>...</head>
-  <body>
-    <video id="video" width="640" height="480" autoplay></video>
-    <span id="result"></span>
-    <!-- Dont for get to link your JavaScript -->
-    <script src="./main.js" async></script>
-  </body>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <canvas id="canvas1"></canvas>
+
+
+        <!-- unpkg -->
+        <script src="https://unpkg.com/instacam"></script>
+
+        <!-- jsdelivr -->
+        <script src="https://cdn.jsdelivr.net/npm/instacam@latest/dist/instacam.umd.js"></script>
+
+        <script>
+            let camera = new Instacam(
+                document.querySelector('#canvas1'), {
+                    width: 800,
+                    height: 600
+                }
+            );
+
+        </script>
+    </body>
 </html>
