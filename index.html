@@ -8,26 +8,27 @@
     </head>
     <body>
         <video id="qr-video"></video>
+        <br>
+        <span id="cam-qr-result">None</span>
 
 
         <script src="./qr-scanner.umd.min.js"></script>
         <script>
+            const videoElem = document.getElementById('qr-video');
+            const camQrResult = document.getElementById('cam-qr-result');
             // do something with QrScanner
             // To enforce the use of the new api with detailed scan results, call the constructor with an options object, see below.
-            // const qrScanner = new QrScanner(
-            //     videoElem,
-            //     result => console.log('decoded qr code:', result),
-            //     { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ },
-            // );
-
-            const videoElem = document.getElementById('qr-video');
-            // For backwards compatibility, omitting the options object will currently use the old api, returning scan results as
-            // simple strings. This old api will be removed in the next major release, by which point the options object is then
-            // also not required anymore to enable the new api.
             const qrScanner = new QrScanner(
                 videoElem,
                 result => console.log('decoded qr code:', result),
-                // No options provided. This will use the old api and is deprecated in the current version until next major version.
+                { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ 
+                    onDecodeError: error => {
+                        camQrResult.textContent = error;
+                        camQrResult.style.color = 'inherit';
+                    },
+                    highlightScanRegion: true,
+                    highlightCodeOutline: true,
+                },
             );
 
             qrScanner.start();
